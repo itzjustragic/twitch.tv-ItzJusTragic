@@ -1472,22 +1472,41 @@
       }
 
       function generateUsername(role) {
-        // All roles (including mods) get human-looking generated names
+        // All roles (including mods) get Twitch‑style generated names
         if (role === "mod") {
           // Make sure crownedapex appears regularly as a mod
           if (Math.random() < 0.4) {
             return "crownedapex";
           }
         }
-        // Generate human-looking name + optional number
+
         const first = firstNames[Math.floor(Math.random() * firstNames.length)];
         const last  = lastNames[Math.floor(Math.random() * lastNames.length)];
-        let base  = first + last.charAt(0).toUpperCase() + last.slice(1);
-        if (role === "mod") {
-          base += "Mod";
+
+        const baseHandles = [
+          "wagic", "tragic", "voidwalker", "matrixrunner", "clutch", "lockin",
+          "lateNightLurker", "afkAndy", "queueDodger", "rankDemon",
+          "pingAbuser", "aimAssist", "tabbedOut", "keyboardWarrior"
+        ];
+
+        const handle = baseHandles[Math.floor(Math.random() * baseHandles.length)];
+        const num    = Math.random() < 0.45 ? String(Math.floor(Math.random() * 9999)) : "";
+
+        const patterns = [
+          () => (first + last).toLowerCase() + (Math.random() < 0.4 ? num : ""),
+          () => first.toLowerCase() + "_" + last.toLowerCase() + (Math.random() < 0.3 ? num : ""),
+          () => handle.toLowerCase() + (num || String(Math.floor(Math.random() * 999))),
+          () => (Math.random() < 0.5 ? "x" : "") + handle.toLowerCase() + (Math.random() < 0.5 ? "x" : "") + (Math.random() < 0.4 ? num : ""),
+          () => first.toLowerCase() + (Math.random() < 0.5 ? num : ""),
+        ];
+
+        let name = patterns[Math.floor(Math.random() * patterns.length)]();
+
+        if (role === "mod" && name !== "crownedapex") {
+          name = name.replace(/[^a-z0-9_]/g, "").toLowerCase() + "_mod";
         }
-        const num   = Math.random() < 0.3 ? String(Math.floor(Math.random() * 9999)) : "";
-        return base + num;
+
+        return name;
       }
 
       function generateText(role) {
