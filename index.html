@@ -1,0 +1,1630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>ItzJustTragic – Stream Layout</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta property="og:title" content="ItzJustTragic" />
+  <meta property="og:description" content="Our future" />
+  <meta property="og:image" content="https://static-cdn.jtvnw.net/jtv_user_pictures/ef370499-eb0b-4c7b-bc8b-90b76e738fea-profile_image-70x70.png" />
+  <meta property="og:type" content="website" />
+  <style>
+    :root {
+      --bg-main: #050814;
+      --bg-alt: #090d1f;
+      --bg-elevated: #101325;
+      --purple: #9146ff;
+      --purple-soft: #b78dff;
+      --accent: #ff2f70;
+      --accent-soft: #ffb5d0;
+      --text-main: #f5f5ff;
+      --text-muted: #a6a6c6;
+      --text-soft: #6b6b8f;
+      --red-live: #e91916;
+      --font-main: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --radius-lg: 12px;
+      --radius-md: 8px;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      background:
+        radial-gradient(circle at 0 0, #141933, transparent 55%),
+        radial-gradient(circle at 100% 0, #101b3f, transparent 55%),
+        radial-gradient(circle at 50% 120%, #1b0f2b, #050814 70%);
+      color: var(--text-main);
+      font-family: var(--font-main);
+      overflow: hidden;
+    }
+
+    /* Main grid */
+    .app {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      grid-template-columns: 1fr;
+      gap: 6px;
+      padding: 10px 14px;
+    }
+
+    /* Top bar */
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(145,70,255,0.35), rgba(145,70,255,0.02));
+      border: 1px solid rgba(255,255,255,0.06);
+      box-shadow: 0 0 18px rgba(0,0,0,0.75);
+    }
+
+    .top-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+    }
+
+    .top-logo {
+      width: 22px;
+      height: 22px;
+      border-radius: 6px;
+      background: #fff;
+      color: var(--purple);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 15px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.8);
+    }
+
+    .top-title {
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .top-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 12px;
+      color: var(--text-soft);
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: rgba(0,0,0,0.65);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .status-pill-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #21ffb4;
+      margin-right: 5px;
+      box-shadow: 0 0 10px rgba(33,255,180,0.9);
+    }
+
+    /* Main content */
+    .main {
+      display: grid;
+      grid-template-columns: minmax(0, 2.1fr) minmax(280px, 0.85fr);
+      gap: 10px;
+      min-height: 0;
+    }
+
+    /* Video + channel block */
+    .video-column {
+      display: grid;
+      grid-template-rows: minmax(0, 3fr) auto;
+      gap: 8px;
+      min-height: 0;
+    }
+
+    .video-wrapper {
+      position: relative;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      background: radial-gradient(circle at 50% 0, #3d132c, #050814 65%);
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,0.03),
+        0 20px 40px rgba(0,0,0,0.95);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .video-wrapper::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% -20%, rgba(255,255,255,0.07), transparent 65%);
+      mix-blend-mode: screen;
+      pointer-events: none;
+    }
+
+    video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      background: #000;
+    }
+
+    .video-overlay-gradient {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 0 0, rgba(145,70,255,0.45), transparent 60%),
+        radial-gradient(circle at 100% 0, rgba(255,47,112,0.4), transparent 55%),
+        linear-gradient(to top, rgba(0,0,0,0.72), transparent 45%);
+      mix-blend-mode: soft-light;
+    }
+
+    .video-bottom-bar {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 60px;
+      background: linear-gradient(to top, rgba(0,0,0,0.92), transparent);
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      padding: 10px 14px;
+      font-size: 12px;
+    }
+
+    .video-bottom-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .stream-title {
+      font-weight: 600;
+      text-shadow: 0 0 12px rgba(0,0,0,0.9);
+    }
+
+    .stream-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      margin-top: 2px;
+      font-size: 10px;
+      color: var(--text-muted);
+    }
+
+    .stream-tag {
+      padding: 1px 6px;
+      border-radius: 999px;
+      background: rgba(0,0,0,0.6);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .video-bottom-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--text-muted);
+    }
+
+    .viewer-count {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .viewer-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--red-live);
+      box-shadow: 0 0 8px rgba(233,25,22,0.9);
+    }
+
+    /* Channel info row */
+    .channel-info {
+      background: linear-gradient(90deg, rgba(145,70,255,0.16), rgba(12,10,28,0.96));
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 10px 26px rgba(0,0,0,0.9);
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .channel-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 2px solid rgba(255,255,255,0.9);
+      box-shadow:
+        0 0 0 2px rgba(145,70,255,0.7),
+        0 0 20px rgba(145,70,255,0.8);
+    }
+
+    .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .channel-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .channel-name {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .badge-live {
+      display: inline-flex;
+      align-items: center;
+      padding: 1px 6px;
+      border-radius: 999px;
+      background: var(--red-live);
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .channel-line-2 {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .channel-line-3 {
+      font-size: 10px;
+      color: var(--text-soft);
+    }
+
+    .channel-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+    }
+
+    .mute-toggle {
+      border-radius: 999px;
+      border: 0;
+      outline: 0;
+      padding: 4px 10px;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      background: rgba(0,0,0,0.8);
+      color: var(--text-muted);
+      cursor: pointer;
+      border: 1px solid rgba(255,255,255,0.18);
+    }
+
+    .btn {
+      cursor: default;
+      border: 0;
+      outline: 0;
+      border-radius: 999px;
+      padding: 6px 12px;
+      font-size: 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,255,255,0.08);
+      color: var(--text-main);
+      box-shadow: 0 0 12px rgba(0,0,0,0.7);
+    }
+
+    .btn-primary {
+      background: linear-gradient(90deg, var(--accent), var(--accent-soft));
+      color: #050308;
+      font-weight: 600;
+    }
+
+    .btn-primary::before {
+      content: "★";
+      font-size: 11px;
+    }
+
+    /* Chat column */
+    .chat-column {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      min-height: 0;
+    }
+
+    .chat-wrapper {
+      background: linear-gradient(180deg, rgba(0,0,0,0.85), rgba(10,8,28,0.98));
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(255,255,255,0.10);
+      box-shadow: 0 18px 34px rgba(0,0,0,0.95);
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    .chat-header {
+      padding: 8px 10px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .chat-header-title {
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .chat-header-right {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .chat-header-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: rgba(0,0,0,0.7);
+      border: 1px solid rgba(255,255,255,0.12);
+      cursor: pointer;
+      font-size: 10px;
+      color: var(--text-soft);
+    }
+
+    .chat-header-pill-icon {
+      font-size: 11px;
+    }
+
+    .chat-body {
+      position: relative;
+      flex: 1;
+      overflow-y: auto;
+      padding: 6px 8px 10px;
+      font-size: 11px;
+      scrollbar-color: rgba(145,70,255,0.8) rgba(12,12,24,0.9);
+      scrollbar-width: thin;
+    }
+
+    .gift-summary-bar {
+      border-bottom: 1px solid rgba(255,255,255,0.10);
+      padding: 6px 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      background: radial-gradient(circle at 0 0, rgba(145,70,255,0.35), transparent 55%);
+      cursor: pointer;
+    }
+
+    .gift-summary-label {
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 10px;
+      color: var(--text-muted);
+    }
+
+    .gift-summary-chip-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      overflow-x: auto;
+    }
+
+    .gift-summary-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 6px;
+      border-radius: 999px;
+      background: rgba(0,0,0,0.7);
+      border: 1px solid rgba(255,255,255,0.12);
+      font-size: 10px;
+      white-space: nowrap;
+    }
+
+    .gift-summary-icon {
+      font-size: 11px;
+    }
+
+    .gift-summary-count {
+      color: var(--accent-soft);
+    }
+
+    .gifters-panel {
+      position: absolute;
+      inset: 0;
+      display: none;
+      flex-direction: column;
+      background: radial-gradient(circle at 0 0, rgba(145,70,255,0.4), transparent 60%), rgba(3,3,10,0.98);
+      padding: 8px 10px 10px;
+      font-size: 11px;
+    }
+
+    .gifters-panel.open {
+      display: flex;
+    }
+
+    .gifters-panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+
+    .gifters-header-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .gifters-back {
+      border: 0;
+      outline: 0;
+      border-radius: 999px;
+      width: 22px;
+      height: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,0.8);
+      color: var(--text-main);
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    .gifters-title {
+      font-weight: 600;
+    }
+
+    .gifters-sub {
+      font-size: 10px;
+      color: var(--text-soft);
+    }
+
+    .gifters-list {
+      list-style: none;
+      margin: 4px 0 8px;
+      padding: 0;
+    }
+
+    .gifters-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 5px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      font-size: 11px;
+    }
+
+    .gifters-row-left {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .gifters-rank {
+      width: 14px;
+      text-align: right;
+      color: var(--text-soft);
+    }
+
+    .gifters-gift-icon {
+      font-size: 13px;
+    }
+
+    .gifters-name {
+      font-weight: 600;
+    }
+
+    .gift-gradient-1,
+    .gift-gradient-2,
+    .gift-gradient-3 {
+      font-weight: 700;
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 10px rgba(255,255,255,0.3);
+    }
+
+    .gift-gradient-1 {
+      background-image: linear-gradient(90deg, #ff9ae6, #ffd66b);
+    }
+
+    .gift-gradient-2 {
+      background-image: linear-gradient(90deg, #b9a6ff, #6be5ff);
+    }
+
+    .gift-gradient-3 {
+      background-image: linear-gradient(90deg, #ffb1cd, #b78dff);
+    }
+
+    .gifters-count {
+      color: var(--accent-soft);
+      font-size: 11px;
+    }
+
+    .gifters-cta {
+      margin-top: auto;
+      padding-top: 6px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 11px;
+    }
+
+    .gifters-cta-main {
+      color: var(--text-muted);
+    }
+
+    .gifters-cta-button {
+      border-radius: 999px;
+      border: 0;
+      outline: 0;
+      padding: 6px 0;
+      background: linear-gradient(90deg, var(--accent), var(--accent-soft));
+      color: #050308;
+      font-weight: 600;
+      font-size: 12px;
+      cursor: pointer;
+      box-shadow: 0 0 14px rgba(255,47,112,0.7);
+    }
+
+    .chat-body::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .chat-body::-webkit-scrollbar-track {
+      background: rgba(5,5,15,0.95);
+    }
+
+    .chat-body::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, rgba(145,70,255,0.9), rgba(145,70,255,0.4));
+      border-radius: 999px;
+    }
+
+    .chat-scroll {
+      position: relative;
+    }
+
+    .chat-paused-banner {
+      position: sticky;
+      bottom: 0;
+      margin-top: 4px;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: rgba(15,23,42,0.96);
+      border: 1px solid rgba(255,255,255,0.12);
+      font-size: 10px;
+      color: var(--text-muted);
+      cursor: pointer;
+      box-shadow: 0 0 8px rgba(0,0,0,0.8);
+    }
+
+    .chat-paused-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #facc15;
+      box-shadow: 0 0 8px rgba(250,204,21,0.9);
+    }
+
+    .chat-line {
+      display: flex;
+      align-items: baseline;
+      margin-bottom: 2px;
+      opacity: 0.95;
+    }
+
+    .chat-line .time {
+      width: 32px;
+      color: var(--text-soft);
+      font-size: 10px;
+    }
+
+    .chat-line .badges {
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+      margin-right: 2px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 4px;
+      height: 14px;
+      border-radius: 4px;
+      font-size: 9px;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .badge-mod {
+      background: #34d399;
+      color: #04120d;
+    }
+
+    .badge-sub {
+      background: #a855f7;
+      color: #fdf4ff;
+    }
+
+    .badge-vip {
+      border: 1px solid #eab308;
+      color: #fde68a;
+      background: transparent;
+    }
+
+    .chat-line .username {
+      font-weight: 600;
+      margin-right: 4px;
+    }
+
+    .chat-line .username.wagic {
+      color: var(--accent-soft);
+      text-shadow: 0 0 10px rgba(255,47,112,0.9);
+    }
+
+    .chat-line .username.mod {
+      color: #4ade80;
+    }
+
+    .chat-line .message {
+      color: var(--text-main);
+    }
+
+    .chat-line .message .emote {
+      color: #ffd966;
+    }
+
+    .chat-footer {
+      padding: 7px 8px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      color: var(--text-soft);
+      background: rgba(3,3,10,0.96);
+    }
+
+    .chat-input {
+      flex: 1;
+      border-radius: 999px;
+      background: rgba(0,0,0,0.7);
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: 5px 10px;
+      color: var(--text-soft);
+    }
+
+    .chat-send {
+      border-radius: 999px;
+      background: rgba(145,70,255,0.8);
+      border: 0;
+      padding: 4px 10px;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #fff;
+      box-shadow: 0 0 10px rgba(145,70,255,0.8);
+    }
+
+    /* Bottom bar */
+    .bottom-bar {
+      font-size: 11px;
+      color: var(--text-soft);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 4px 4px 0;
+    }
+
+    .bottom-left,
+    .bottom-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* Responsive tweaks */
+    @media (max-width: 1024px) {
+      .main {
+        grid-template-columns: minmax(0, 1.8fr) minmax(260px, 0.9fr);
+      }
+    }
+
+    @media (max-width: 840px) {
+      .app {
+        padding: 8px 8px 10px;
+      }
+      .main {
+        grid-template-columns: 1fr;
+        grid-template-rows: minmax(0, 1.7fr) minmax(0, 1.2fr);
+      }
+      .chat-column {
+        height: 280px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header class="top-bar">
+      <div class="top-left">
+        <div class="top-logo">J</div>
+        <div class="top-title">twitch · itzjustragic</div>
+      </div>
+      <div class="top-right">
+        <div class="status-pill">
+          <span class="status-pill-dot"></span>
+          <span>Matrix overlay online</span>
+        </div>
+        <span>W STREAM • WAGIC MODE</span>
+      </div>
+    </header>
+
+    <main class="main">
+      <!-- Left: video + channel info -->
+      <section class="video-column">
+        <div class="video-wrapper">
+          <video id="streamVideo" autoplay playsinline controls muted>
+            <source src="comp.mp4" type="video/mp4" />
+          </video>
+          <div class="video-overlay-gradient"></div>
+          <div class="video-bottom-bar">
+            <div class="video-bottom-left">
+            </div>
+            <div class="video-bottom-right">
+              <div class="viewer-count">
+                <span class="viewer-dot"></span>
+                <span id="viewerCount">7,257 watching</span>
+              </div>
+              <span>1080p • Source</span>
+              <button id="muteToggle" class="mute-toggle">Mute</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="channel-info">
+          <div class="channel-left">
+            <div class="avatar">
+              <img src="https://static-cdn.jtvnw.net/jtv_user_pictures/ef370499-eb0b-4c7b-bc8b-90b76e738fea-profile_image-70x70.png" alt="itzjustragic avatar" />
+            </div>
+            <div class="channel-meta">
+              <div class="channel-name">
+                <span>itzjustragic</span>
+                <span class="badge-live">LIVE</span>
+              </div>
+              <div class="channel-line-2">I just work here | !socials !discord</div>
+              <div class="stream-tags">
+                <div class="stream-tag">Just Chatting</div>
+                <div class="stream-tag">Matrix</div>
+                <div class="stream-tag">Retro PC</div>
+                <div class="stream-tag">W Stream</div>
+              </div>
+              <div class="channel-line-3">Streaming from the neon void – welcome to Wagic.</div>
+            </div>
+          </div>
+          <div class="channel-right">
+            <div class="btn btn-primary">Subscribe</div>
+            <div class="btn">Gift a Sub</div>
+            <div class="btn">Follow</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Right: chat -->
+      <aside class="chat-column">
+        <div class="chat-wrapper">
+          <div class="chat-header">
+            <div class="chat-header-title">Stream Chat</div>
+            <div class="chat-header-right">
+              <span>Only emotes &amp; W's allowed</span>
+              <button id="openGifters" class="chat-header-pill">
+                <span class="chat-header-pill-icon">🎁</span>
+                <span>Top Gifters</span>
+              </button>
+            </div>
+          </div>
+          <button id="giftSummaryBar" class="gift-summary-bar">
+            <span class="gift-summary-label">Top Gifters</span>
+            <div class="gift-summary-chip-row">
+              <span class="gift-summary-chip">
+                <span class="gift-summary-icon">🎁</span>
+                <span class="gift-gradient-1">MatrixAngel</span>
+                <span class="gift-summary-count">2k</span>
+              </span>
+              <span class="gift-summary-chip">
+                <span class="gift-summary-icon">🎁</span>
+                <span class="gift-gradient-2">VoidWhale</span>
+                <span class="gift-summary-count">1k</span>
+              </span>
+              <span class="gift-summary-chip">
+                <span class="gift-summary-icon">🎁</span>
+                <span class="gift-gradient-3">WagicWizard</span>
+                <span class="gift-summary-count">500</span>
+              </span>
+            </div>
+          </button>
+          <div class="chat-body">
+            <div id="chatScroll" class="chat-scroll"></div>
+            <div id="chatPausedBanner" class="chat-paused-banner">
+              <span class="chat-paused-dot"></span>
+              <span>Chat paused due to scroll. Click to resume.</span>
+            </div>
+          </div>
+          <div id="giftersPanel" class="gifters-panel">
+            <div class="gifters-panel-header">
+              <div class="gifters-header-left">
+                <button id="closeGifters" class="gifters-back">←</button>
+                <div>
+                  <div class="gifters-title">Monthly Top Gifters</div>
+                  <div class="gifters-sub">Resets in 19 days</div>
+                </div>
+              </div>
+            </div>
+            <ol class="gifters-list">
+              <li class="gifters-row">
+                <div class="gifters-row-left">
+                  <span class="gifters-rank">1</span>
+                  <span class="gifters-gift-icon">🎁</span>
+                  <span class="gifters-name gift-gradient-1">MatrixAngel</span>
+                </div>
+                <span class="gifters-count">2,000</span>
+              </li>
+              <li class="gifters-row">
+                <div class="gifters-row-left">
+                  <span class="gifters-rank">2</span>
+                  <span class="gifters-gift-icon">🎁</span>
+                  <span class="gifters-name gift-gradient-2">VoidWhale</span>
+                </div>
+                <span class="gifters-count">1,000</span>
+              </li>
+              <li class="gifters-row">
+                <div class="gifters-row-left">
+                  <span class="gifters-rank">3</span>
+                  <span class="gifters-gift-icon">🎁</span>
+                  <span class="gifters-name gift-gradient-3">WagicWizard</span>
+                </div>
+                <span class="gifters-count">500</span>
+              </li>
+              <li class="gifters-row">
+                <div class="gifters-row-left">
+                  <span class="gifters-rank">4</span>
+                  <span class="gifters-gift-icon">🎁</span>
+                  <span class="gifters-name">CyberNova</span>
+                </div>
+                <span class="gifters-count">500</span>
+              </li>
+              <li class="gifters-row">
+                <div class="gifters-row-left">
+                  <span class="gifters-rank">5</span>
+                  <span class="gifters-gift-icon">🎁</span>
+                  <span class="gifters-name">PixelPhantom</span>
+                </div>
+                <span class="gifters-count">400</span>
+              </li>
+              <li class="gifters-row">
+                <div class="gifters-row-left">
+                  <span class="gifters-rank">6</span>
+                  <span class="gifters-gift-icon">🎁</span>
+                  <span class="gifters-name">NeoKnight</span>
+                </div>
+                <span class="gifters-count">350</span>
+              </li>
+              <li class="gifters-row">
+                <div class="gifters-row-left">
+                  <span class="gifters-rank">7</span>
+                  <span class="gifters-gift-icon">🎁</span>
+                  <span class="gifters-name">GlitchGhost</span>
+                </div>
+                <span class="gifters-count">300</span>
+              </li>
+              <li class="gifters-row">
+                <div class="gifters-row-left">
+                  <span class="gifters-rank">8</span>
+                  <span class="gifters-gift-icon">🎁</span>
+                  <span class="gifters-name">LofiLurker</span>
+                </div>
+                <span class="gifters-count">250</span>
+              </li>
+              <li class="gifters-row">
+                <div class="gifters-row-left">
+                  <span class="gifters-rank">9</span>
+                  <span class="gifters-gift-icon">🎁</span>
+                  <span class="gifters-name">RetroRanger</span>
+                </div>
+                <span class="gifters-count">200</span>
+              </li>
+              <li class="gifters-row">
+                <div class="gifters-row-left">
+                  <span class="gifters-rank">10</span>
+                  <span class="gifters-gift-icon">🎁</span>
+                  <span class="gifters-name">MatrixMoth</span>
+                </div>
+                <span class="gifters-count">100</span>
+              </li>
+            </ol>
+            <div class="gifters-cta">
+              <div class="gifters-cta-main">Gift 🎁 1 sub to take 6th!</div>
+              <button class="gifters-cta-button">Gift 1 sub · $5.99</button>
+            </div>
+          </div>
+          <div class="chat-footer">
+            <div class="chat-input">Send a message (W stream, Wagic, etc.)</div>
+            <button class="chat-send">Chat</button>
+          </div>
+        </div>
+      </aside>
+    </main>
+
+    <footer class="bottom-bar">
+      <div class="bottom-left">
+        <span>© ItzJustTragic · Matrix Overlay Layout</span>
+      </div>
+      <div class="bottom-right">
+        <span>Tip: append <code>?video=&lt;url&gt;</code> to use a custom video source</span>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // Simple playlist that loops through multiple videos in sequence forever
+    (function setupVideoPlaylist() {
+      const video = document.getElementById("streamVideo");
+      if (!video) return;
+
+      const playlist = [
+        "https://cdn.discordapp.com/attachments/1254803307839623298/1480793093887496242/index_49.mp4?ex=69b39a89&is=69b24909&hm=18a0838c8f5e0583c3d48b8e1c4501e537561c20685120dfd30d192f4ea13aac&",
+        "https://cdn.discordapp.com/attachments/1254803307839623298/1480791249270083624/20260309_ModernMoistArugulaCorgiDerp-gaiy7zMQYsdePA05_source.mp4?ex=69b398d1&is=69b24751&hm=14a8fe639adb9d26151b25ecb4a814bb6a0da4fb823f797db4c8a292fd4ec2bf&",
+        "https://cdn.discordapp.com/attachments/1254803307839623298/1480791173873401937/20260309_EphemeralSnappySlothBlargNaut-kAL9VWm2M-9eNSXm_source.mp4?ex=69b398bf&is=69b2473f&hm=136b7a7667e07b82146cc09768b03daad1aa8265b748cde83d6f7f1d1b298efc&",
+        "https://cdn.discordapp.com/attachments/1254803307839623298/1481521410529693789/20260311_FuriousCrispyOstrichKippa-_7v4KUuTqNqk-LtR_source.mp4?ex=69b39dd5&is=69b24c55&hm=24f2b848eccb8a2cc2e3eb1efee3b854798ed4495700ceb101a5ef087802d56f&",
+        "https://cdn.discordapp.com/attachments/1254803307839623298/1470635415307555033/index_39_online-video-cutter.com.mp4?ex=69b39076&is=69b23ef6&hm=fae5b73923cac10326aad75561c2d0d93cddd4b0d30f3c20de679bca4e24a34a&",
+        "https://cdn.discordapp.com/attachments/1254803307839623298/1425706241874858044/20251008_ProtectiveUnusualJaguarPastaThat-PjMUj_SABoprcMqy_source.mp4?ex=69b396e8&is=69b24568&hm=2141304257f0e9fff0668b61a2485e72222851c351bf974fbf0a15a64af91be1&",
+        "https://cdn.discordapp.com/attachments/1254803307839623298/1425704879753789522/20251008_SolidDoubtfulWaspSuperVinlin-VpkHAxOLXz4qZKv6_source.mp4?ex=69b395a3&is=69b24423&hm=ba94e9ad47e3a4e1edb3b24b4806253597011e2e7903a5ab8249e5fb40c002f5&",
+        "https://cdn.discordapp.com/attachments/1254803307839623298/1405048982110994533/20250812_ChillyAltruisticCrabsSaltBae-oOHoud3S54rfNlFj_source.mp4?ex=69b395d5&is=69b24455&hm=3868db6c4a5726ea6637d988631aea578a001389b34f2cd7629ab3a075abd686&",
+        "https://cdn.discordapp.com/attachments/1254803307839623298/1393696544670355486/20250525_DarkSpineyLattePermaSmug-b58c9P9A0qs4Sd01_source.mp4?ex=69b3d04d&is=69b27ecd&hm=5b6fdbc37c5451a4821c6851c657ecc0e15a4f1e12f6ddb1bda4f21e2fe9f02c&",
+        "https://cdn.discordapp.com/attachments/1254803307839623298/1386269980466872434/20250622_FilthyFastNeanderthalPeoplesChamp-B22u5eKxn-jKRD7w_source.mp4?ex=69b3d286&is=69b28106&hm=1d67250f2c1862f40ad1001161c80f09468d90d93120136adc86befd0bc37c95&",
+        "https://cdn.discordapp.com/attachments/1254803307839623298/1377512338344640573/775043522_720.mp4?ex=69b39a56&is=69b248d6&hm=6f2aa97f27b85e5915bd2864976405ebf47cb469353dc855465a5ca575f36034&"
+      ];
+
+      let currentIndex = 0;
+
+      function playCurrent() {
+        const url = playlist[currentIndex];
+        if (!url) return;
+        video.src = url;
+        video.load();
+        video.play().catch(() => {
+          // Browser may block autoplay with sound; user click will start it.
+        });
+      }
+
+      video.addEventListener("ended", () => {
+        currentIndex = (currentIndex + 1) % playlist.length;
+        playCurrent();
+      });
+
+      // Start the first video automatically
+      playCurrent();
+
+      // Viewer count simulation
+      const viewerEl = document.getElementById("viewerCount");
+      if (viewerEl) {
+        let viewers = 7257;
+        function formatViewers(n) {
+          return `${n.toLocaleString()} watching`;
+        }
+        viewerEl.textContent = formatViewers(viewers);
+        setInterval(() => {
+          const delta = Math.floor(Math.random() * 41) - 20; // -20 to +20
+          viewers = Math.max(50, viewers + delta);
+          viewerEl.textContent = formatViewers(viewers);
+        }, 5000);
+      }
+
+      // Mute / unmute button
+      const muteToggle = document.getElementById("muteToggle");
+      if (muteToggle) {
+        function syncMuteLabel() {
+          muteToggle.textContent = video.muted ? "Unmute" : "Mute";
+        }
+        syncMuteLabel();
+        muteToggle.addEventListener("click", () => {
+          video.muted = !video.muted;
+          syncMuteLabel();
+          video.play().catch(() => {});
+        });
+      }
+    })();
+
+    // Twitch-like looping chat that spams believable W stream / TALK TO EM / U SPITTIN messages
+    (function setupChat() {
+      const chatScroll = document.getElementById("chatScroll");
+      const chatBody   = chatScroll?.parentElement;
+      const pausedBanner = document.getElementById("chatPausedBanner");
+      const giftersPanel = document.getElementById("giftersPanel");
+      const openGifters = document.getElementById("openGifters");
+      const closeGifters = document.getElementById("closeGifters");
+      const giftSummaryBar = document.getElementById("giftSummaryBar");
+      if (!chatScroll || !chatBody || !pausedBanner) return;
+
+      let pausedByScroll = false;
+
+      // Pools to build believable Twitch-style usernames
+      // Realistic-looking first/last names for usernames
+      const firstNames = [
+        "Aaron","Adam","Alex","Alicia","Amber","Andrew","Ashley","Ben","Brandon","Brianna",
+        "Cameron","Carlos","Chris","Christine","Cody","Cole","Connor","Courtney","Daisy","Daniel",
+        "David","Devin","Dylan","Eli","Ella","Emily","Ethan","Evan","Felix","Gaby",
+        "Gavin","Grace","Hayden","Henry","Isaac","Isabella","Jacob","Jaden","Jamal","Jared",
+        "Jasmine","Jason","Jayden","Jenna","Jesse","Jessica","Jordan","Josh","Julia","Justin",
+        "Kara","Kayla","Kelly","Kevin","Kyle","Laura","Liam","Logan","Luca","Lucas",
+        "Luis","Maddie","Marcus","Maria","Mason","Max","Mia","Michael","Mikey","Natalie",
+        "Nathan","Nick","Noah","Olivia","Owen","Parker","Riley","Ryan","Samantha","Sam",
+        "Sarah","Sebastian","Seth","Sofia","Taylor","Thomas","Tyler","Vanessa","Victor","Zach"
+      ];
+
+      const lastNames = [
+        "Allen","Baker","Bell","Bennett","Brooks","Brown","Campbell","Carter","Clark","Coleman",
+        "Collins","Cooper","Cruz","Diaz","Edwards","Evans","Fisher","Flores","Foster","Garcia",
+        "Gomez","Gonzalez","Gray","Green","Griffin","Hall","Harris","Hayes","Hernandez","Hill",
+        "Howard","Hughes","Jackson","James","Jenkins","Johnson","Jones","Kelly","King","Lee",
+        "Lewis","Lopez","Martinez","Miller","Mitchell","Morales","Morgan","Morris","Murphy","Nelson",
+        "Nguyen","Ortiz","Parker","Perez","Perry","Phillips","Powell","Price","Ramirez","Reed",
+        "Richardson","Rivera","Roberts","Robinson","Rodriguez","Rogers","Ross","Russell","Sanchez","Sanders",
+        "Scott","Simmons","Smith","Stewart","Taylor","Thomas","Thompson","Torres","Turner","Walker",
+        "Ward","Watson","White","Williams","Wood","Wright","Young"
+      ];
+
+      const vipUsers = []; // reserved if you ever want fixed VIPs
+      const subUsers = []; // reserved if you ever want fixed SUBs
+
+      const wMessages = [
+        "TALK TO EM 🔥🔥🔥",
+        "U SPITTIN RN",
+        "NAH HE COOKIN FR",
+        "SPEAK ON ITTT",
+        "TALK THAT TALK",
+        "NAH CUZ HE NOT WRONG",
+        "W TAKE W TAKE W TAKE",
+        "BRO SAID WHAT NEEDED TO BE SAID",
+        "U SPITTIN U SPITTIN U SPITTIN",
+        "NAH HE IN HIS BAG",
+        "TALK TO EM CHAT",
+        "W COMMENTARY W VIBES",
+        "CHAT HE MAKIN SENSE LOWKEY",
+        "TELL EM AGAIN THEY AIN’T HEAR U",
+        "THIS THE REAL TALK STREAM",
+        "THIS WHY I SUBBED FR",
+        "CHAT WE REALLY WATCHING PEAK CONTENT",
+        "STREAMER COOKING NO APRON",
+        "EVERY TIME HE GOES FULL RANT ITS A W",
+        "TRAGIC ON A DIFFERENT TIMING TONIGHT",
+        "THIS NOT EVEN A STREAM THIS A EXPERIENCE",
+        "PUT THIS ENTIRE VOD IN A MUSEUM",
+        "THIS WHAT I MEAN WHEN I SAY W STREAM",
+        "BRO DROPPING QUOTES BACK TO BACK",
+        "EVERY BAR HE SAY GOT SUBTITLES",
+        "THIS THE TYPE OF STREAM THAT CURES DEPRESSION",
+        "STREAM SO GOOD I FORGOT I WAS LURKING",
+        "THIS THE ONE CLIP IT CHAT",
+        "THIS ENERGY IS ACTUALLY INSANE",
+        "IM JUST SITTING HERE LIKE WAGIC WAGIC WAGIC",
+        "I AINT EVEN TYPING I JUST NODDING",
+        "LOWKEY STREAM OF THE YEAR",
+        "THIS THE DEFINITION OF W CONTENT",
+        "BRO TURNED CASUAL TALK INTO TED TALK",
+        "I CANT EVEN ALT TAB OFF THIS",
+        "STREAM GOT ME LOCKED IN LIKE A MOVIE",
+        "THIS THE REAL LATE NIGHT VIBES",
+        "EVERY TIME I THINK HE DONE HE GOES HARDER",
+        "WHOEVER NOT HERE RIGHT NOW TAKING A L",
+        "THIS VIBE UNMATCHED ACTUALLY",
+        "STREAM FEEL LIKE WE IN VC WITH THE HOMIES",
+        "NAH THIS SHI DIFFERENT TONIGHT",
+        "BRO SAID WE COOKING AND STARTED A FEAST",
+        "THIS THE KIND OF STREAM YOU REMEMBER",
+        "I AINT EVEN CHECKING OTHER TABS NO MORE",
+        "CHAT WE WITNESSING HISTORY LOWKEY",
+        "THIS ENERGY NEEDS TO BE STUDIED",
+        "EVERY TAKE GOT ME SAYING TRUE TRUE TRUE",
+        "THIS WHAT TWITCH WAS MADE FOR",
+        "STREAM SO LOCKED IN MY FOOD GETTING COLD",
+        "BRO REALLY IN HIS FINAL FORM RIGHT NOW",
+        "THIS IS PRIME TRAGIC CONTENT",
+        "IF YOU NOT SAYING W STREAM YOU WRONG",
+        "I FEEL LIKE WE ALL IN THE SAME ROOM RN",
+        "WAGIC MODE ACTIVATED NO PATCH NOTES",
+        "STREAM JUST GETTING BETTER EVERY MINUTE",
+        "THIS THE REAL TALK TO EM ARC",
+        "HES NOT EVEN PLAYING GAMES AND ITS STILL PEAK",
+        "THIS VIBE CANNOT BE REPLICATED",
+        "I DIDNT KNOW I NEEDED THIS STREAM TIL NOW",
+        "BRO REALLY SAID LET ME COOK AND BROUGHT A KITCHEN",
+        "EVERY LINE A HIGHLIGHT REEL",
+        "THIS THE TYPE OF STREAM YOU SEND TO THE GC",
+        "I OPENED FOR BACKGROUND NOISE NOW IM LOCKED",
+        "CHAT WE SPOILED WITH THIS CONTENT",
+        "STREAM HIT DIFFERENT WHEN HE IN HIS BAG",
+        "THIS THE REAL WAGIC LOBBY",
+        "I LOVE WHEN STREAMS TURN INTO THESE TALKS",
+        "BRO REALLY HIT THE W STREAM BUTTON",
+        "THIS THE COZY CHAOTIC ENERGY I NEEDED",
+        "LOWKEY FEEL LIKE WE IN A MOVIE SCENE",
+        "THIS WHOLE SEGMENT A 10/10",
+        "STREAMER JUST FARMING W'S AT THIS POINT",
+        "NOTHING BUT W ENERGY IN THIS CHAT",
+        "IM HERE LIKE YES CHEF KEEP COOKING",
+        "THIS VIBE IS WHY I COME BACK EVERY TIME",
+        "BRO TURNED MIDWEEK INTO EVENT NIGHT",
+        "WHO NEEDS NETFLIX THIS BETTER",
+        "THIS A CERTIFIED WAGIC MOMENT",
+        "I COULD LISTEN TO THIS FOR HOURS",
+        "WE REALLY JUST WATCHING A LEGEND COOK",
+        "THIS STREAM GONNA LIVE RENT FREE IN MY HEAD",
+        "CHAT YOU SEE WHY THIS MY COMFORT STREAM",
+        "I LOVE WHEN HE GETS INTO THIS MODE",
+        "THIS THAT UNPLANNED PEAK CONTENT",
+        "BRO REALLY PRESSURED ME INTO LIKING MY LIFE AGAIN",
+        "THIS IS WHAT LATE NIGHT TWITCH SUPPOSED TO BE",
+        "STREAM SO GOOD I FORGOT IM TIRED",
+        "THIS BEEN A STRAIGHT W SINCE I CLICKED",
+        "IM NOT EVEN TABBING OUT TO TYPE THIS IN GC",
+        "SOMEONE ARCHIVE THIS WHOLE VOD PLEASE",
+        "TONIGHT IS ONE LONG W MOMENT",
+        "THIS THE PURE WAGIC EXPERIENCE",
+        "STREAM GOT ME GRINNING AT MY MONITOR",
+        "THIS RANT HITTING LIKE A MIXTAPE",
+        "BRO LITERALLY FARMING CLIPS RN",
+        "THIS MIGHT BE MY FAVORITE STREAM YET",
+        "EVERYBODY LURKING BUT WE ALL LOCKED IN",
+        "THIS THE ENERGY THAT MADE ME FOLLOW",
+        "I DONT EVEN CARE WHAT GAME ON SCREEN ANYMORE",
+        "STREAMER GOT THE WHOLE TIMELINE BEAT",
+        "THIS IS WHY I NEVER CLOSE THIS TAB",
+        "ITS JUST W ON W ON W",
+        "HE REALLY SAYING EVERYTHING WE THINKING",
+        "THIS CHAT + THIS STREAM = WAGIC",
+        "BRO REALLY UNLOCKED A NEW ARC LIVE"
+      ];
+
+      const zestyMessages = [
+        "nah tragic making me question my sexuality rn",
+        "why he kinda fine when he start cooking like this",
+        "not me kicking my feet watching this stream",
+        "idk man tragic voice hitting a lil too good rn",
+        "chat be honest tragic not a lil bit cute???",
+        "why do i lowkey blush when he says chat like that",
+        "tragic if you read this just know i’d say yes",
+        "bro stream so good i might need a boyfriend after this",
+        "this angle got tragic looking kinda dangerous ngl",
+        "nah this overlay gay awakening speedrun",
+        "why he look extra good when the lights dim like that",
+        "everything he saying hitting AND he kinda pretty??",
+        "not me smiling at my monitor like its a facetime",
+        "tragic blink twice if u taking me on a date after stream",
+        "stream so cozy i might start manifesting a situationship",
+        "why his laugh lowkey my favorite sound rn",
+        "the way he says chat got me kicking my feet actually",
+        "camera quality too good im catching feelings",
+        "idc what nobody say tragic got main character face",
+        "im just here like wow hes kinda… yeah",
+        "this man talking about life and im focused on his jawline",
+        "why he sit like that knowing im watching",
+        "nah he cute for no reason be serious",
+        "this overlay making him look like a mysterious love interest",
+        "tragic if streaming dont work u could be a romcom lead",
+        "this whole setup got date night energy",
+        "tell me why i just fixed my hair like he can see me",
+        "im about 2 seconds away from writing fanfic in my head",
+        "tragic say goodnight to chat slowly and watch what happens",
+        "he really out here being funny, smart AND fine?? pick one",
+        "stream got me blushing like this a one on one call",
+        "camera angle screaming soft boy villain arc",
+        "lowkey feel like he flirting with chat rn",
+        "this is a safe space for people down bad for tragic",
+        "every time he leans in i forget what he was saying",
+        "nah the eye contact with the camera is ILLEGAL",
+        "tragic if u ever need a cohost i can be delusional",
+        "this setup got more rizz than half of twitch",
+        "bro said welcome to stream and my brain heard welcome home",
+        "why he looking like the love interest in a visual novel",
+        "he talking about deep topics and im just like kiss me LMAO",
+        "chat acting normal but i know yall blushing too",
+        "every time he smiles my wifi gets stronger",
+        "overlay got him looking like he live in my thoughts",
+        "if tragic drops a goodnight tweet im never recovering",
+        "voice so soft i might fall in love by accident",
+        "this stream hitting like a slow burn romance",
+        "he adjust the mic and suddenly im weak",
+        "tragic say ‘goodnight chat’ and i’ll write wedding vows",
+        "im not even watching in 1080p and he still hitting",
+        "this convo healing but also mildly thirst trapping",
+        "why do i feel like we sharing a blanket rn",
+        "every pause he takes feels like a romantic tension beat",
+        "nah if he ever does a facecam closeup its over for me",
+        "someone stop me before i call this man handsome in caps",
+        "stream title says chatting but this romance coded",
+        "i came here to relax not catch feelings",
+        "why his ‘mhmm’ responses sound like boyfriend material",
+        "camera lighting doing him too many favors",
+        "if tragic made a dating sim i’d 100% pick his route",
+        "this feel like late night car talk with your crush",
+        "bro talking about life goals and im like be mine",
+        "even his silences got rizz im sick",
+        "i swear the chair creak sounded attractive idk whats wrong",
+        "tragic if u see this just wink once so i know its real",
+        "chat we all collectively down bad its okay",
+        "the way he leans forward when serious?? unnecessary",
+        "this overlay turned a stream into a romance novella",
+        "bro got streamer rizz AND therapist rizz insane combo",
+        "if he ever says my username im changing my last name",
+        "this stream giving soft boy comfort arc",
+        "voice got me ready to overshare and hold hands",
+        "the little smiles after a joke lowkey lethal",
+        "cant tell if this is twitch or a dating app preview",
+        "tragic ur whole existence feel like a crush playlist",
+        "this how parasocial relationships get started lowkey",
+        "nah this stream should come with a feelings warning",
+        "every time he says ‘chat listen’ my heart does",
+        "why he look like he give really good hugs",
+        "this convo deep but his eyes deeper idk",
+        "i opened stream bored now im emotionally invested",
+        "if he ever does a just chatting with candles im done for",
+        "tragic do u realize how dangerously attractive this is",
+        "bro got me cheesing at my monitor like a cartoon character",
+        "this stream feels like a crush you never admit out loud",
+        "overlay + voice + vibe = instant situationship energy",
+        "lowkey wanna pause the vod and stare at him",
+        "why he built like a pinterest board suggestion",
+        "tragic if you ever drop a thirst trap its over",
+        "chat he talking about purpose and i found mine its him",
+        "this whole time im supposed to listen but im simping",
+        "nah whoever said men cant be pretty never saw this stream",
+        "i joined for WAGIC stayed for the pretty streamer",
+        "this is undercover romance content and i support it",
+        "bro blinked and my brain said wow hes pretty",
+        "im starting to think this overlay was made to seduce chat",
+        "tragic if u ever do eye contact stream im calling out",
+        "this feel like a soft launch of our relationship",
+        "not me mentally practicing how i’d talk to him irl",
+        "this whole stream is just one long gay awakening moment"
+      ];
+
+      const fillerMessages = [
+        "nah this convo kinda crazy in the best way",
+        "lowkey feel like im in a podcast rn",
+        "u ever just sit back and let streamer cook?",
+        "this why i keep the stream on in the bg",
+        "chat just staring at the screen like 👁️👄👁️",
+        "we really turned therapy session into content",
+        "nah keep talking im actually listening",
+        "this the type of stream u fall asleep to peacefully",
+        "someone clip this whole rant actually",
+        "this feel like discord call with the homies",
+        "nah he not wrong about any of this",
+        "we just nodding behind our screens rn",
+        "background gameplay foreground wisdom",
+        "okay philosopher tragic go crazy then",
+        "im just here like yeah… true… facts…",
+        "this the real ‘just chatting’ category",
+        "stream got that late night radio energy",
+        "lowkey forgot i was supposed to be multitasking",
+        "this convo feel like scrolling deep twitter threads",
+        "he talking and im lowkey learning stuff",
+        "this that background noise that becomes foreground",
+        "i came for noise and stayed for the message",
+        "chat silently agreeing like yeah he spittin",
+        "this what i imagine good discord vcs feel like",
+        "stream layout clean, convo cleaner",
+        "this topic kinda hitting a little too personal",
+        "he saying what nobody wanna admit out loud",
+        "this that ‘one more vod’ type of talk",
+        "not even checking dms im tapped in",
+        "he turning throwaway thoughts into full monologues",
+        "this could be a whole youtube essay lowkey",
+        "background music + his voice = calm brain",
+        "you ever just stare at chat and absorb vibes?",
+        "stream so comfy i forgot i was stressed",
+        "this like when homie starts venting in the car",
+        "im not even typing i just existing here",
+        "u ever hear something and go damn same",
+        "this whole segment could be a podcast episode",
+        "we really be sharing the same braincell fr",
+        "he talking and im just like yup… yup… yup",
+        "this stream feel like safe background noise",
+        "i like when streamers get real like this",
+        "no drama, no weirdness, just talking",
+        "lowkey wish this convo never ends",
+        "this the good kind of oversharing",
+        "my social battery low but this stream recharging it",
+        "kinda wild how chill but engaging this is",
+        "this the tab u leave on all night",
+        "this the opposite of doomscrolling",
+        "ironic how im antisocial but love streams like this",
+        "its like being at a kickback but nobody expects you to talk",
+        "real ones know these convos hit harder than gameplay",
+        "this whole vibe feels unbothered but thoughtful",
+        "he going from jokes to wisdom so smooth",
+        "pause the game keep the convo rolling",
+        "this exactly what i needed today",
+        "sometimes you just need a streamer who rambles",
+        "the silence between topics kinda nice too",
+        "stream got me thinking about life but in a good way",
+        "this like facetime with that one deep friend",
+        "i dont even care what category this is in",
+        "this chat quietly elite tbh",
+        "funny how strangers online be more relatable",
+        "this convo feel like late night bus ride thoughts",
+        "bro turning intrusive thoughts into full TED talks",
+        "i forgot this was live and not a vod",
+        "this type of segment makes me stay subbed",
+        "my brain like keep this on dont switch",
+        "this exactly why small details in streams matter",
+        "stream pacing slow but in a cozy way",
+        "its giving lowfi stream of consciousness",
+        "same 10 people typing but thousands feeling it",
+        "keyboard quiet but minds loud rn",
+        "this the kinda thing you rewatch while cleaning",
+        "idk man this just feels human",
+        "no crazy alerts, just talking and vibing",
+        "its like a live journal entry with background chat",
+        "we all strangers sharing the same cozy moment",
+        "this convo got me staring at the ceiling",
+        "lowkey love when streamers go off on tangents",
+        "this is peak chill stream content",
+        "brain finally stopped racing listening to this",
+        "i keep nodding like he can see me",
+        "this energy unmatched by big streams",
+        "you can tell he really means what hes saying",
+        "this just feels like home tab energy",
+        "topic hopping but it all makes sense somehow",
+        "this the type of stream you leave on while journaling",
+        "never met bro but i trust his takes rn",
+        "its wild how comforting a random stream can be",
+        "this the ‘keep tab open while cleaning room’ vibe",
+        "its so easy to just exist here quietly",
+        "im not even reading every message just soaking vibe",
+        "this convo got main character soundtrack feel",
+        "this is like modern digital fireplace talk",
+        "i could listen to this kind of stream daily",
+        "its just internet strangers but it feels familiar",
+        "this lowkey better than half the podcasts i know",
+        "nobody yelling, nobody forcing jokes just real talk",
+        "this segment bout to be comfort watch material",
+        "sometimes chat doesnt need to be loud to be good",
+        "this that slow burn cozy content",
+        "im just thankful this stream exists rn"
+      ];
+
+      let counter = 0;
+
+      function timeStamp() {
+        const now = new Date();
+        let h = now.getHours();
+        const m = String(now.getMinutes()).padStart(2, "0");
+        const suffix = h >= 12 ? "PM" : "AM";
+        h = h % 12;
+        if (h === 0) h = 12;
+        const hh = String(h).padStart(2, "0");
+        return `${hh}:${m} ${suffix}`;
+      }
+
+      function pickRole() {
+        const r = Math.random();
+        if (r < 0.08) return "mod";
+        if (r < 0.16) return "vip";
+        if (r < 0.36) return "sub";
+        if (r < 0.56) return "wagic";
+        return "normal";
+      }
+
+      function generateUsername(role) {
+        // All roles (including mods) get human-looking generated names
+        if (role === "mod") {
+          // Make sure crownedapex appears regularly as a mod
+          if (Math.random() < 0.4) {
+            return "crownedapex";
+          }
+        }
+        // Generate human-looking name + optional number
+        const first = firstNames[Math.floor(Math.random() * firstNames.length)];
+        const last  = lastNames[Math.floor(Math.random() * lastNames.length)];
+        let base  = first + last.charAt(0).toUpperCase() + last.slice(1);
+        if (role === "mod") {
+          base += "Mod";
+        }
+        const num   = Math.random() < 0.3 ? String(Math.floor(Math.random() * 9999)) : "";
+        return base + num;
+      }
+
+      function generateText(role) {
+        if (role === "wagic" || Math.random() < 0.55) {
+          return wMessages[Math.floor(Math.random() * wMessages.length)];
+        }
+        return fillerMessages[Math.floor(Math.random() * fillerMessages.length)];
+      }
+
+      function createLine(msg) {
+        const line = document.createElement("div");
+        line.className = "chat-line";
+
+        const time = document.createElement("span");
+        time.className = "time";
+        time.textContent = timeStamp();
+
+        const badgesWrap = document.createElement("span");
+        badgesWrap.className = "badges";
+
+        if (msg.role === "mod") {
+          const b = document.createElement("span");
+          b.className = "badge badge-mod";
+          b.textContent = "MOD";
+          badgesWrap.appendChild(b);
+        } else if (msg.role === "vip") {
+          const b = document.createElement("span");
+          b.className = "badge badge-vip";
+          b.textContent = "VIP";
+          badgesWrap.appendChild(b);
+        } else if (msg.role === "sub") {
+          const b = document.createElement("span");
+          b.className = "badge badge-sub";
+          b.textContent = "SUB";
+          badgesWrap.appendChild(b);
+        }
+
+        const user = document.createElement("span");
+        user.className = "username";
+        if (msg.role === "wagic") user.classList.add("wagic");
+        if (msg.role === "mod") user.classList.add("mod");
+        user.textContent = msg.user + ":";
+
+        const text = document.createElement("span");
+        text.className = "message";
+        text.innerHTML = msg.text.replace(/W STREAM/gi, "<span class='emote'>W STREAM</span>").replace(/WAGIC/gi, "<span class='emote'>WAGIC</span>");
+
+        line.appendChild(time);
+        line.appendChild(badgesWrap);
+        line.appendChild(user);
+        line.appendChild(text);
+        return line;
+      }
+
+      function addMessage() {
+        const role = pickRole();
+        const user = generateUsername(role);
+        let text;
+        if (role === "mod" && user === "crownedapex") {
+          text = zestyMessages[Math.floor(Math.random() * zestyMessages.length)];
+        } else {
+          text = generateText(role);
+        }
+        const msg = {
+          role,
+          user,
+          text
+        };
+        const line = createLine(msg);
+        chatScroll.appendChild(line);
+
+        const lines = chatScroll.children;
+        if (lines.length > 130) {
+          chatScroll.removeChild(lines[0]);
+        }
+
+        if (!pausedByScroll) {
+          chatBody.scrollTop = chatBody.scrollHeight;
+        }
+
+        counter++;
+      }
+
+      // Gradual warm-up instead of dumping everything at once
+      let warmupLeft = 40;
+      const warmupTimer = setInterval(() => {
+        addMessage();
+        warmupLeft--;
+        if (warmupLeft <= 0) clearInterval(warmupTimer);
+      }, 180);
+
+      // Then keep adding at intervals for the "spam" feeling
+      setInterval(addMessage, 750);
+
+      // Scroll / pause handling
+      function updatePausedState() {
+        const distanceFromBottom = chatBody.scrollHeight - chatBody.scrollTop - chatBody.clientHeight;
+        const shouldPause = distanceFromBottom > 24;
+        if (shouldPause && !pausedByScroll) {
+          pausedByScroll = true;
+          pausedBanner.style.display = "flex";
+        } else if (!shouldPause && pausedByScroll) {
+          pausedByScroll = false;
+          pausedBanner.style.display = "none";
+        }
+      }
+
+      chatBody.addEventListener("scroll", updatePausedState);
+
+      pausedBanner.addEventListener("click", () => {
+        pausedByScroll = false;
+        chatBody.scrollTop = chatBody.scrollHeight;
+        pausedBanner.style.display = "none";
+      });
+
+      function openGiftersPanel() {
+        if (!giftersPanel) return;
+        giftersPanel.classList.add("open");
+      }
+
+      function closeGiftersPanel() {
+        if (!giftersPanel) return;
+        giftersPanel.classList.remove("open");
+      }
+
+      if (openGifters) {
+        openGifters.addEventListener("click", openGiftersPanel);
+      }
+
+      if (giftSummaryBar) {
+        giftSummaryBar.addEventListener("click", openGiftersPanel);
+      }
+
+      if (closeGifters) {
+        closeGifters.addEventListener("click", closeGiftersPanel);
+      }
+    })();
+  </script>
+</body>
+</html>
