@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>ItzJustTragic</title>
+  <title>The Years Of Wagic</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta property="og:title" content="ItzJustTragic" />
+  <meta property="og:title" content="The Years Of Wagic" />
   <meta property="og:description" content="Our future" />
   <meta property="og:image" content="https://static-cdn.jtvnw.net/jtv_user_pictures/ef370499-eb0b-4c7b-bc8b-90b76e738fea-profile_image-70x70.png" />
   <meta property="og:type" content="website" />
@@ -98,6 +98,25 @@
       letter-spacing: 0.04em;
       text-transform: uppercase;
       color: var(--text-muted);
+    }
+
+    .year-select {
+      margin-left: 10px;
+      padding: 3px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.18);
+      background: rgba(5,8,20,0.9);
+      color: var(--text-main);
+      font-size: 11px;
+      outline: none;
+      appearance: none;
+      cursor: pointer;
+      backdrop-filter: blur(10px);
+    }
+
+    .year-select option {
+      background: #050814;
+      color: var(--text-main);
     }
 
     .top-right {
@@ -802,8 +821,15 @@
   <div class="app">
     <header class="top-bar">
       <div class="top-left">
-        <div class="top-logo">T</div>
-        <div class="top-title">Twitch.tv/ItzJusTragic</div>
+        <div class="top-logo">W</div>
+        <div class="top-title">
+          The Years Of Wagic
+          <select id="yearSelect" class="year-select">
+            <option value="2024">2024</option>
+            <option value="2025">2025</option>
+            <option value="2026" selected>2026</option>
+          </select>
+        </div>
       </div>
       <div class="top-right">
         <div class="status-pill">
@@ -1020,45 +1046,90 @@
   </div>
 
   <script>
-    // Simple playlist that loops through multiple videos in sequence forever
+    // Playlist that loops through multiple videos in sequence forever,
+    // now split by year and controlled by a dropdown.
     (function setupVideoPlaylist() {
       const video = document.getElementById("streamVideo");
       if (!video) return;
 
-      const playlist = [
-        "https://cdn.discordapp.com/attachments/1254803307839623298/1480793093887496242/index_49.mp4?ex=69b39a89&is=69b24909&hm=18a0838c8f5e0583c3d48b8e1c4501e537561c20685120dfd30d192f4ea13aac&",
-        "https://cdn.discordapp.com/attachments/1254803307839623298/1480791249270083624/20260309_ModernMoistArugulaCorgiDerp-gaiy7zMQYsdePA05_source.mp4?ex=69b398d1&is=69b24751&hm=14a8fe639adb9d26151b25ecb4a814bb6a0da4fb823f797db4c8a292fd4ec2bf&",
-        "https://cdn.discordapp.com/attachments/1254803307839623298/1480791173873401937/20260309_EphemeralSnappySlothBlargNaut-kAL9VWm2M-9eNSXm_source.mp4?ex=69b398bf&is=69b2473f&hm=136b7a7667e07b82146cc09768b03daad1aa8265b748cde83d6f7f1d1b298efc&",
-        "https://cdn.discordapp.com/attachments/1254803307839623298/1481521410529693789/20260311_FuriousCrispyOstrichKippa-_7v4KUuTqNqk-LtR_source.mp4?ex=69b39dd5&is=69b24c55&hm=24f2b848eccb8a2cc2e3eb1efee3b854798ed4495700ceb101a5ef087802d56f&",
-        "https://cdn.discordapp.com/attachments/1254803307839623298/1470635415307555033/index_39_online-video-cutter.com.mp4?ex=69b39076&is=69b23ef6&hm=fae5b73923cac10326aad75561c2d0d93cddd4b0d30f3c20de679bca4e24a34a&",
-        "https://cdn.discordapp.com/attachments/1254803307839623298/1425706241874858044/20251008_ProtectiveUnusualJaguarPastaThat-PjMUj_SABoprcMqy_source.mp4?ex=69b396e8&is=69b24568&hm=2141304257f0e9fff0668b61a2485e72222851c351bf974fbf0a15a64af91be1&",
-        "https://cdn.discordapp.com/attachments/1254803307839623298/1425704879753789522/20251008_SolidDoubtfulWaspSuperVinlin-VpkHAxOLXz4qZKv6_source.mp4?ex=69b395a3&is=69b24423&hm=ba94e9ad47e3a4e1edb3b24b4806253597011e2e7903a5ab8249e5fb40c002f5&",
-        "https://cdn.discordapp.com/attachments/1254803307839623298/1405048982110994533/20250812_ChillyAltruisticCrabsSaltBae-oOHoud3S54rfNlFj_source.mp4?ex=69b395d5&is=69b24455&hm=3868db6c4a5726ea6637d988631aea578a001389b34f2cd7629ab3a075abd686&",
-        "https://cdn.discordapp.com/attachments/1254803307839623298/1393696544670355486/20250525_DarkSpineyLattePermaSmug-b58c9P9A0qs4Sd01_source.mp4?ex=69b3d04d&is=69b27ecd&hm=5b6fdbc37c5451a4821c6851c657ecc0e15a4f1e12f6ddb1bda4f21e2fe9f02c&",
-        "https://cdn.discordapp.com/attachments/1254803307839623298/1386269980466872434/20250622_FilthyFastNeanderthalPeoplesChamp-B22u5eKxn-jKRD7w_source.mp4?ex=69b3d286&is=69b28106&hm=1d67250f2c1862f40ad1001161c80f09468d90d93120136adc86befd0bc37c95&",
-        "https://cdn.discordapp.com/attachments/1254803307839623298/1377512338344640573/775043522_720.mp4?ex=69b39a56&is=69b248d6&hm=6f2aa97f27b85e5915bd2864976405ebf47cb469353dc855465a5ca575f36034&",
-        "https://cdn.discordapp.com/attachments/1215499690766901301/1477483999801774180/lv_0_20260228195211.mp4?ex=69b416f3&is=69b2c573&hm=cd90b3d6b61b1b6441ab80cae4f8e9461f1da74c51762c42d4bf4fca98aae571&",
-        "https://cdn.discordapp.com/attachments/1274042631755796481/1475217014376235069/lv_0_20260222134347.mp4?ex=69b46968&is=69b317e8&hm=33d2de205bff26d5afec085e0ad4912c15e92b2d8b64a76e92a6c31822c338b9&",
-        "https://cdn.discordapp.com/attachments/1274042631755796481/1475214844037955714/lv_0_20260222133521.mp4?ex=69b46762&is=69b315e2&hm=e70a93a3ceacdbc5388ac7e2bb59d7b2d53bd77a3c0479beb4432b3554b98fb7&",
-        "https://cdn.discordapp.com/attachments/1215499690766901301/1470532318614781983/lv_0_20260209152902.mp4?ex=69b481f1&is=69b33071&hm=e7d1780b63201a1842cf0e96720dc25b7b57c604f5b9bc98053dbc0361e373dc&",
-        "https://cdn.discordapp.com/attachments/1215499690766901301/1470532459430019324/lv_0_20260209152436.mp4?ex=69b48213&is=69b33093&hm=190bb8d4607d0761f0834c2ac64265b4eeca036b745621b6cd41a366032494cb&",
-        "https://cdn.discordapp.com/attachments/1215499690766901301/1468470673830707210/lv_0_20260203225524.mp4?ex=69b44223&is=69b2f0a3&hm=c7b4a8f6c1718efd6a32103b8bc49b57daa028f10e3cbed6f7c3c73f46f0e205&",
-        "https://cdn.discordapp.com/attachments/1215499690766901301/1466543894622765118/lv_0_20260129152024.mp4?ex=69b47fef&is=69b32e6f&hm=93fc760a99807549b8120f9c856a3eb38147ee61508ab5db87efaff05e154bef&",
-        "https://cdn.discordapp.com/attachments/1215499690766901301/1465861288910520360/lv_0_20260127180800.mp4?ex=69b3fe75&is=69b2acf5&hm=d0ccdce39c4c4aa250de48337a46fe68adf75e283c7482be74f36de7eb99dc6d&",
-        "https://cdn.discordapp.com/attachments/1215499690766901301/1462546913587888230/lv_0_20260118143812.mp4?ex=69b475f5&is=69b32475&hm=124d6e576294746f6f3485cc7694e253b02afe4eacaba2ad546a948669597144&",
-        "https://cdn.discordapp.com/attachments/1215499690766901301/1461251806976807004/lv_0_20260115005149.mp4?ex=69b45d0b&is=69b30b8b&hm=a0cbb410e4209c3dfc603991cf6f73f50d7f01a79b75b9d63386e5c023fda784&",
-        "https://cdn.discordapp.com/attachments/1215499690766901301/1460530247333314613/lv_0_20260113010428.mp4?ex=69b4600a&is=69b30e8a&hm=6b1848d3ff937105e893b5abb2eddee3a5fe46b650dc9744b9ef4f49a316f6ef&",
-        "https://cdn.discordapp.com/attachments/1215499690766901301/1456947843515285504/lv_0_20260103034848.mp4?ex=69b486aa&is=69b3352a&hm=cab5514769db348ba0aa6da9b29b810c6f624ab78aeee98a34b9cf19771d6ca4&",
-        "https://cdn.discordapp.com/attachments/1215499690766901301/1455183731223560192/lv_0_20251229065926.mp4?ex=69b40a75&is=69b2b8f5&hm=acf9299baaa9556acb9565a597c18d3df6c78edd59f90997753fc343da794d9a&",
-        "https://cdn.discordapp.com/attachments/1215499690766901301/1453147792577925151/lv_0_20251223160750.mp4?ex=69b48b57&is=69b339d7&hm=1544b19516300772e4f79a2fc2e253cff3bbe8ae7557f58913c3830d0bb9ce77&",
-        "https://cdn.discordapp.com/attachments/1215499690766901301/1452529017298092155/lv_0_20251221230752.mp4?ex=69b44550&is=69b2f3d0&hm=04de3bfd0c2e2b0c6fed1b872d837266afd17031eda49e5e89632ce50bf9190d&",
-        "https://cdn.discordapp.com/attachments/1215499690766901301/1451542138851692656/lv_0_20251219054704.mp4?ex=69b4a2b6&is=69b35136&hm=14dade8a26f43599de100b2d88a20433e05ee0acc83161449190f353dc0a5fc6&"
-      ];
+      const playlistsByYear = {
+        "2024": [
+          "https://cdn.discordapp.com/attachments/1215499690766901301/1222747835821199501/RPReplay_Final1711549437.mov?ex=69b42be9&is=69b2da69&hm=9bf73cdfd44a4af0c76643d9637ffe87da39949f5edfe06a9edcb9e7ef9a3f3d&",
+          "https://cdn.discordapp.com/attachments/1215499690766901301/1222747851638177843/RPReplay_Final1711198755.mov?ex=69b42bed&is=69b2da6d&hm=a842ed576411849b6f94f705e54098d9d9e8d7cbf7954613128cbdc1368437fd&",
+          "https://cdn.discordapp.com/attachments/1215499690766901301/1255726820926685274/lv_0_20240626215101.mp4?ex=69b42d7c&is=69b2dbfc&hm=12cd836393c2c9bc3ac2f387f47abe5e47810f7bae968a88cc2386971c1325d2&",
+          "https://cdn.discordapp.com/attachments/1215499690766901301/1255755485244821576/AT-cm_qqcfQot6ahDRUykTMXnr0g.mp4?ex=69b4482e&is=69b2f6ae&hm=6ea11bfa0a8b8c7a7ab422ee38aaf7a0defc97c503a730911e7ddfba864f97d2&",
+          "https://cdn.discordapp.com/attachments/1215499690766901301/1255755775482007642/AT-cm_p30hJCIK2ci8DSx4slkOyQ.mp4?ex=69b44873&is=69b2f6f3&hm=cb301339de827f0c228e4af8fc11153180807c73c802d64ca179e5b46db8a218&",
+          "https://cdn.discordapp.com/attachments/1215499690766901301/1258130927863992371/69c611d8-ef4a-4cb3-94d1-e4243bfc5f9d_logo.mp4?ex=69b45abc&is=69b3093c&hm=17e06c77b54c4c8da4eb699ae29d32d6c01aa9cfa2a9bf444760abeae7a9110b&",
+          "https://cdn.discordapp.com/attachments/1215499690766901301/1258140249310367794/20b0ec13-901d-40d9-bf93-a945422e4fd6_logo.mp4?ex=69b4636a&is=69b311ea&hm=22100362e25299438b5f2a89a43b69afc509ed2cfefd4674f385ce3476fc3fbb&",
+          "https://cdn.discordapp.com/attachments/1215499690766901301/1258140625430380544/cebc1b18-50c3-48ba-9b4a-f501b11ffb7d_logo.mp4?ex=69b463c4&is=69b31244&hm=605785ce55a3a55e46dcf110761092a0ca27717fe4d10e6eb0a9f88be7cef59a&",
+          "https://cdn.discordapp.com/attachments/1215499690766901301/1258140661614379008/b19f8141-0be6-46ea-9d89-1d2ae1071e2e.mp4?ex=69b463cc&is=69b3124c&hm=568f342e0d363b594e3cf6842efc61cd02315973b95bed798a7abb5e00c3eb83&",
+          "https://cdn.discordapp.com/attachments/1215499690766901301/1258140677615648911/b2d40a92-09cf-405f-a020-e5dac9d59532_logo.mp4?ex=69b463d0&is=69b31250&hm=542243423310db02e1d959f7aac098073cac5783003edc730a99b04718e827cb&",
+          "https://cdn.discordapp.com/attachments/1215499690766901301/1258140680853782529/560a4973-fb99-4b28-bf74-045288196657_logo.mp4?ex=69b463d1&is=69b31251&hm=d039887ab443ac24fa7c9fd593dd82c4dab07a8f725d8eccd36797868f82bb16&"
+        ],
+        "2025": [
+          "https://cdn.discordapp.com/attachments/1215499690766901301/1368087004402815006/3569404834.mp4?ex=69b4400f&is=69b2ee8f&hm=294b3ca72b9a94b1421781a05dbc0357fcf769381b0048ef7ef604b9a8543ebc&",
+          "https://cdn.discordapp.com/attachments/1215499690766901301/1368087879968100362/2282695579.mp4?ex=69b440e0&is=69b2ef60&hm=551c3e62eef20fa550a92e5a6ef625b79ceeead500a73588029c1b155a3c42a5&",
+          "https://cdn.discordapp.com/attachments/1215499690766901301/1376087336718434344/20250524_IncredulousChillyStarYee-OG1kU8pR5cVKKkq0_source.mp4?ex=69b459f3&is=69b30873&hm=4837bee0bbd0d8ca9b10c5c0b479ae144ded87b00fc37884a5405d76a24cc0bb&",
+          "https://cdn.discordapp.com/attachments/1215499690766901301/1376384508361965588/8mb.video-AZL-gZH62f3B.mp4?ex=69b4c5f6&is=69b37476&hm=3b30e4e2d5ec1b293f796c5b29b98effddc457f975df1520412d206f25e02849&",
+          "https://cdn.discordapp.com/attachments/1215499690766901301/1376782644548993064/775043522_720.mp4?ex=69b43e81&is=69b2ed01&hm=f3d170dca72e97a62da4ea5725f353d218601fce2b883ec765dd7023b889d4a4&",
+          "https://cdn.discordapp.com/attachments/1215499690766901301/1377836029993816065/20250529_NaiveUglyFishChefFrank-qT956WAKw9AS1_Pz_source.mp4?ex=69b4c7cc&is=69b3764c&hm=db2b31af9ded1bfef765a88d22579ef059630c082b20c68b47bc11b97d2353f5&",
+          "https://cdn.discordapp.com/attachments/1215499690766901301/1380037739365404814/20250604_DeafBetterYakinikuUncleNox-9T5n3nH8X8toUrcK_source.mp4?ex=69b4388c&is=69b2e70c&hm=7a5fe3899b2b0ac88a839028b5e72dc4b7b6b47e9c47f319b235626b4c7a17c2&",
+          "https://cdn.discordapp.com/attachments/1215499690766901301/1380401737998798919/20250605_CleverAgileGoshawkOSsloth--a19Iq8ef_Q7ot_N_source.mp4?ex=69b43a0c&is=69b2e88c&hm=f19cd7e4f1eec2c11ac48ada60d39c6d0fff1135e22770655eec2422004beb09&",
+          "https://cdn.discordapp.com/attachments/1215499690766901301/1380795390936223774/20250606_TsundereInquisitiveLocustSMOrc-3NR6v5uT7IqAOG8t_source.mp4?ex=69b4572b&is=69b305ab&hm=c99d1a59ed71fea0c8ee44926d6ea26ec65edb0ebaedd9f6cb14357335a28e68&",
+          "https://cdn.discordapp.com/attachments/1215499690766901301/1386227033041928212/20250621_VenomousNurturingFishMcaT-jCUzdrHgouCYLiy__source.mp4?ex=69b45347&is=69b301c7&hm=83bec6e1156738b5e7436e81199f44734f98f60e224e20fcba99f98660137461&",
+          "https://cdn.discordapp.com/attachments/1215499690766901301/1386266077104836679/20250622_WealthyImpartialPresidentRedCoat-wSikK8uJeg1ed2rY_source.mp4?ex=69b477a4&is=69b32624&hm=3f22fee438d10e3f67da7719dd99a642380f051562e799708cebc6fc108417cb&",
+          "https://cdn.discordapp.com/attachments/1215499690766901301/1386271233468923964/20250622_InquisitiveBreakablePenguinMcaT-UOGEcaabEcjzXwlt_source.mp4?ex=69b47c71&is=69b32af1&hm=483bbb4abee9b6a917f29df3cddd4e95ed89014f1c0538c354380acb5b4e358b&",
+          "https://cdn.discordapp.com/attachments/1215499690766901301/1386975006936010845/20250624_SuperVibrantPanDxCat-kq30ikLC0-TL4GXn_source.mp4?ex=69b468e2&is=69b31762&hm=e5828ed99b333b330b6fd4b73fc4a9798d751da84fc75110a52f1e192dea2058&",
+          "https://cdn.discordapp.com/attachments/1215499690766901301/1392051465379512391/20250708_SweetJollySashimiKeepo-WeZAdBz-GVkoinTd_source.mp4?ex=69b46bb4&is=69b31a34&hm=445e17612243e9a3a5c173ec28cab4cc613ebcae3a90bba3189fa8ef2213d5c6&"
+        ],
+        "2026": [
+          "https://cdn.discordapp.com/attachments/1254803307839623298/1480793093887496242/index_49.mp4?ex=69b44349&is=69b2f1c9&hm=91f4758c26991d95f35a7c9345841c4d286bdd31bf5db77c0d7a8b063f7548a3&",
+          "https://cdn.discordapp.com/attachments/1254803307839623298/1480791249270083624/20260309_ModernMoistArugulaCorgiDerp-gaiy7zMQYsdePA05_source.mp4?ex=69b44191&is=69b2f011&hm=d6e608746c5877f63376d1e9add070a554ee6bae83d9522bc2348e769c9fbef5&",
+          "https://cdn.discordapp.com/attachments/1254803307839623298/1480791173873401937/20260309_EphemeralSnappySlothBlargNaut-kAL9VWm2M-9eNSXm_source.mp4?ex=69b4417f&is=69b2efff&hm=32bfeca269cdcd8e75da5ef6363c3beb7a3fe19fd5147c468b9a5aee6b22fc37&",
+          "https://cdn.discordapp.com/attachments/1254803307839623298/1462547364148543611/20260103_UgliestEnchantingShrewPipeHype-MjRqTBEhW0htDsFg_source.mp4?ex=69b47660&is=69b324e0&hm=5f501838ba3f7eb0db145871ebb64ffdfada981e6217326e484b7bbfb3e7bc84&",
+          "https://cdn.discordapp.com/attachments/1254803307839623298/1435499578290864260/20251104_UninterestedZealousRutabagaVoteNay-CJ84j_QhJpykKTi7_source.mp4?ex=69b447e9&is=69b2f669&hm=6447ef3d371b3ccfa8bdbd26a518ea5bb1abaffc1881f2df085531fc43e2fffd&",
+          "https://cdn.discordapp.com/attachments/1254803307839623298/1425706241874858044/20251008_ProtectiveUnusualJaguarPastaThat-PjMUj_SABoprcMqy_source.mp4?ex=69b43fa8&is=69b2ee28&hm=8e6eb3cfb70411118a2daf39617c055726a1331fd5759336d7920071cdf9db3c&",
+          "https://cdn.discordapp.com/attachments/1254803307839623298/1481521410529693789/20260311_FuriousCrispyOstrichKippa-_7v4KUuTqNqk-LtR_source.mp4?ex=69b44695&is=69b2f515&hm=9fe9cb498ef8f771413569897a152bc7c28bb1f69aac237bb68e6919e35bd089&",
+          "https://cdn.discordapp.com/attachments/1215499690766901301/1480789587071729755/lv_0_20260309234715.mp4?ex=69b44005&is=69b2ee85&hm=d7b9e34cbadded9b2f8157d03769fca41a1b89d11ab28e48b66c10799ab8a555&",
+          "https://cdn.discordapp.com/attachments/1215499690766901301/1477483999801774180/lv_0_20260228195211.mp4?ex=69b4bfb3&is=69b36e33&hm=4b2f8f5711e97c264bb9a35f06013c619e4e83940f5a3651afb59b5e30b9abf8&",
+          "https://cdn.discordapp.com/attachments/1274042631755796481/1475214844037955714/lv_0_20260222133521.mp4?ex=69b46762&is=69b315e2&hm=e70a93a3ceacdbc5388ac7e2bb59d7b2d53bd77a3c0479beb4432b3554b98fb7&",
+          "https://cdn.discordapp.com/attachments/1274042631755796481/1475217014376235069/lv_0_20260222134347.mp4?ex=69b46968&is=69b317e8&hm=33d2de205bff26d5afec085e0ad4912c15e92b2d8b64a76e92a6c31822c338b9&",
+          "https://cdn.discordapp.com/attachments/1215499690766901301/1470532459430019324/lv_0_20260209152436.mp4?ex=69b48213&is=69b33093&hm=190bb8d4607d0761f0834c2ac64265b4eeca036b745621b6cd41a366032494cb&",
+          "https://cdn.discordapp.com/attachments/1215499690766901301/1470532318614781983/lv_0_20260209152902.mp4?ex=69b481f1&is=69b33071&hm=e7d1780b63201a1842cf0e96720dc25b7b57c604f5b9bc98053dbc0361e373dc&",
+          "https://cdn.discordapp.com/attachments/1215499690766901301/1468470673830707210/lv_0_20260203225524.mp4?ex=69b44223&is=69b2f0a3&hm=c7b4a8f6c1718efd6a32103b8bc49b57daa028f10e3cbed6f7c3c73f46f0e205&",
+          "https://cdn.discordapp.com/attachments/1215499690766901301/1465861288910520360/lv_0_20260127180800.mp4?ex=69b4a735&is=69b355b5&hm=3f551174edfe00cfe22c19ff6b9b48950fdcd5397d6154d6243db338eed9ba7a&",
+          "https://cdn.discordapp.com/attachments/1215499690766901301/1462546913587888230/lv_0_20260118143812.mp4?ex=69b475f5&is=69b32475&hm=124d6e576294746f6f3485cc7694e253b02afe4eacaba2ad546a948669597144&",
+          "https://cdn.discordapp.com/attachments/1215499690766901301/1461251806976807004/lv_0_20260115005149.mp4?ex=69b45d0b&is=69b30b8b&hm=a0cbb410e4209c3dfc603991cf6f73f50d7f01a79b75b9d63386e5c023fda784&",
+          "https://cdn.discordapp.com/attachments/1215499690766901301/1460530247333314613/lv_0_20260113010428.mp4?ex=69b4600a&is=69b30e8a&hm=6b1848d3ff937105e893b5abb2eddee3a5fe46b650dc9744b9ef4f49a316f6ef&",
+          "https://cdn.discordapp.com/attachments/1215499690766901301/1456947843515285504/lv_0_20260103034848.mp4?ex=69b486aa&is=69b3352a&hm=cab5514769db348ba0aa6da9b29b810c6f624ab78aeee98a34b9cf19771d6ca4&",
+          "https://cdn.discordapp.com/attachments/1215499690766901301/1456947843515285504/lv_0_20260103034848.mp4?ex=69b486aa&is=69b3352a&hm=cab5514769db348ba0aa6da9b29b810c6f624ab78aeee98a34b9cf19771d6ca4&",
+          "https://cdn.discordapp.com/attachments/1215499690766901301/1453147792577925151/lv_0_20251223160750.mp4?ex=69b48b57&is=69b339d7&hm=1544b19516300772e4f79a2fc2e253cff3bbe8ae7557f58913c3830d0bb9ce77&",
+          "https://cdn.discordapp.com/attachments/1215499690766901301/1451542138851692656/lv_0_20251219054704.mp4?ex=69b4a2b6&is=69b35136&hm=14dade8a26f43599de100b2d88a20433e05ee0acc83161449190f353dc0a5fc6&",
+          "https://cdn.discordapp.com/attachments/1215499690766901301/1452529017298092155/lv_0_20251221230752.mp4?ex=69b44550&is=69b2f3d0&hm=04de3bfd0c2e2b0c6fed1b872d837266afd17031eda49e5e89632ce50bf9190d&",
+          "https://cdn.discordapp.com/attachments/1215499690766901301/1448540165382475896/lv_0_20251210225625.mp4?ex=69b442e8&is=69b2f168&hm=e01dda59282f2471335d866983f1dc8331b3c1063664783965104ee1a8da24fd&",
+          "https://cdn.discordapp.com/attachments/1215499690766901301/1448180802276950116/lv_0_20251209231207.mp4?ex=69b445b9&is=69b2f439&hm=dae57388f761b4b401908d35ec6b1de5c42596c85bafe3a53b6558b8e071a5b5&",
+          "https://cdn.discordapp.com/attachments/1215499690766901301/1446365205972910153/lv_0_20251204225550.mp4?ex=69b44251&is=69b2f0d1&hm=0a87963cb69c4b1aace3b9b93fbbdcb05f2557bdbd318a9759d9c8487f4c08ce&"
+        ]
+      };
 
+      const yearSelect = document.getElementById("yearSelect");
+      let currentYear = (yearSelect && yearSelect.value) || "2026";
+      let playlist = playlistsByYear[currentYear] || [];
       let currentIndex = 0;
 
       function playCurrent() {
-        const url = playlist[currentIndex];
+        // If a direct ?video= URL is present, always prefer that and don't auto-advance the playlist.
+        const urlParams = new URLSearchParams(window.location.search);
+        const directVideo = urlParams.get("video");
+        if (directVideo) {
+          video.src = directVideo;
+          video.load();
+          video.play().catch(() => {});
+          return;
+        }
+
+        if (!playlist || playlist.length === 0) return;
+        const url = playlist[currentIndex % playlist.length];
         if (!url) return;
         video.src = url;
         video.load();
@@ -1067,7 +1138,22 @@
         });
       }
 
+      function changeYear(newYear) {
+        if (!playlistsByYear[newYear]) return;
+        currentYear = newYear;
+        playlist = playlistsByYear[currentYear];
+        currentIndex = 0;
+        playCurrent();
+      }
+
+      if (yearSelect) {
+        yearSelect.addEventListener("change", (e) => {
+          changeYear(e.target.value);
+        });
+      }
+
       video.addEventListener("ended", () => {
+        if (!playlist || playlist.length === 0) return;
         currentIndex = (currentIndex + 1) % playlist.length;
         playCurrent();
       });
