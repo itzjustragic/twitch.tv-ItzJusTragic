@@ -1114,6 +1114,8 @@
 
       const yearSelect = document.getElementById("yearSelect");
       let currentYear = (yearSelect && yearSelect.value) || "2026";
+      // Expose current year globally so chat + viewers can react to it
+      window.currentWagicYear = currentYear;
       let playlist = playlistsByYear[currentYear] || [];
       let currentIndex = 0;
 
@@ -1141,9 +1143,17 @@
       function changeYear(newYear) {
         if (!playlistsByYear[newYear]) return;
         currentYear = newYear;
+        window.currentWagicYear = currentYear;
         playlist = playlistsByYear[currentYear];
         currentIndex = 0;
         playCurrent();
+        if (window.resetWagicChat) {
+          try {
+            window.resetWagicChat();
+          } catch (e) {
+            console.warn("resetWagicChat failed", e);
+          }
+        }
       }
 
       if (yearSelect) {
@@ -1164,14 +1174,38 @@
       // Viewer count simulation
       const viewerEl = document.getElementById("viewerCount");
       if (viewerEl) {
-        let viewers = 7257;
+        let viewers = 0;
         function formatViewers(n) {
           return `${n.toLocaleString()} watching`;
         }
-        viewerEl.textContent = formatViewers(viewers);
+
+        function getViewerConfig() {
+          const year = window.currentWagicYear || "2026";
+          if (year === "2024") {
+            return { baseMin: 12, baseMax: 40, step: 4 };
+          }
+          if (year === "2025") {
+            return { baseMin: 130, baseMax: 380, step: 30 };
+          }
+          if (year === "2026") {
+            return { baseMin: 1300, baseMax: 4200, step: 90 };
+          }
+          // 2023 / default: small early stream
+          return { baseMin: 5, baseMax: 25, step: 3 };
+        }
+
+        function initViewers() {
+          const cfg = getViewerConfig();
+          viewers = Math.floor((cfg.baseMin + cfg.baseMax) / 2);
+          viewerEl.textContent = formatViewers(viewers);
+        }
+
+        initViewers();
+
         setInterval(() => {
-          const delta = Math.floor(Math.random() * 41) - 20; // -20 to +20
-          viewers = Math.max(50, viewers + delta);
+          const cfg = getViewerConfig();
+          const delta = Math.floor(Math.random() * (cfg.step * 2 + 1)) - cfg.step;
+          viewers = Math.max(cfg.baseMin, Math.min(cfg.baseMax, viewers + delta));
           viewerEl.textContent = formatViewers(viewers);
         }, 5000);
       }
@@ -1189,6 +1223,20 @@
           video.play().catch(() => {});
         });
       }
+
+      // Spacebar play/pause toggle for the main video
+      document.addEventListener("keydown", (e) => {
+        if (e.code !== "Space" && e.key !== " ") return;
+        // Don't steal space from form fields
+        const tag = (document.activeElement && document.activeElement.tagName) || "";
+        if (["INPUT", "TEXTAREA", "SELECT"].includes(tag)) return;
+        e.preventDefault();
+        if (video.paused) {
+          video.play().catch(() => {});
+        } else {
+          video.pause();
+        }
+      });
     })();
 
     // Twitch-like looping chat that spams believable W stream / TALK TO EM / U SPITTIN messages
@@ -1551,7 +1599,48 @@
         "im just thankful this stream exists rn"
       ];
 
+      // 2024: small circle, same few names laughing at clips
+      const year2024Users = ["crownedapex", "dream", "billy", "deante", "tragic"];
+      const year2024Messages = [
+        "LMAOOOO 💀",
+        "nah this clip got me crying",
+        "i got the clip 😭",
+        "save that clip rn",
+        "bro u actually scum for this one",
+        "this man a certified scum villain 🤣",
+        "STUPID LMAOOOO",
+        "this the dumbest thing ive seen all week",
+        "clip it clip it clip it",
+        "chat this the scummiest play ive seen",
+        "nah rewind that i wasnt ready",
+        "how u do him that dirty on stream 💀",
+        "bro said content and turned into a menace",
+        "this the type of clip that live rent free",
+        "clip called ‘he deserved it’",
+        "nah this the one we posting in gc",
+        "u actually cooked him for no reason",
+        "THIS CLIP ILLEGAL LOWKEY",
+        "my jaw on the floor rn",
+        "bro got packed live on stream",
+      ];
+
+      // Extra short hype lines that lean into W STREAM / WAGIC / he spittin
+      const hypeShortMessages = [
+        "W STREAM",
+        "HE SPITTIN",
+        "WAGIC WAGIC WAGIC",
+        "WAGIC IN REAL TIME",
+        "NAH THIS A W",
+        "STREAM OF THE YEAR FR",
+        "LOCKED IN WAGIC MODE",
+        "HE REALLY COOKIN NO APRON",
+        "WE WATCHING STRAIGHT WAGIC",
+        "100% W CONTENT",
+      ];
+
       let counter = 0;
+      let warmupTimer = null;
+      let spamTimer = null;
 
       function timeStamp() {
         const now = new Date();
@@ -1612,6 +1701,20 @@
       }
 
       function generateText(role) {
+        const year = window.currentWagicYear || "2026";
+
+        // 2025 / 2026 – very W-heavy hype chat
+        if (year === "2025" || year === "2026") {
+          if (role === "wagic" || Math.random() < 0.7) {
+            if (Math.random() < 0.35) {
+              return hypeShortMessages[Math.floor(Math.random() * hypeShortMessages.length)];
+            }
+            return wMessages[Math.floor(Math.random() * wMessages.length)];
+          }
+          return fillerMessages[Math.floor(Math.random() * fillerMessages.length)];
+        }
+
+        // Default (2023 / fallback): original mix
         if (role === "wagic" || Math.random() < 0.55) {
           return wMessages[Math.floor(Math.random() * wMessages.length)];
         }
@@ -1664,14 +1767,27 @@
       }
 
       function addMessage() {
-        const role = pickRole();
-        const user = generateUsername(role);
+        const year = window.currentWagicYear || "2026";
+
+        let role;
+        let user;
         let text;
-        if (role === "mod" && user === "crownedapex") {
-          text = zestyMessages[Math.floor(Math.random() * zestyMessages.length)];
+
+        if (year === "2024") {
+          // Tight friend-circle vibes: same few names laughing at clips
+          user = year2024Users[Math.floor(Math.random() * year2024Users.length)];
+          role = user === "crownedapex" ? "mod" : "normal";
+          text = year2024Messages[Math.floor(Math.random() * year2024Messages.length)];
         } else {
-          text = generateText(role);
+          role = pickRole();
+          user = generateUsername(role);
+          if (role === "mod" && user === "crownedapex") {
+            text = zestyMessages[Math.floor(Math.random() * zestyMessages.length)];
+          } else {
+            text = generateText(role);
+          }
         }
+
         const msg = {
           role,
           user,
@@ -1692,16 +1808,54 @@
         counter++;
       }
 
-      // Gradual warm-up instead of dumping everything at once
-      let warmupLeft = 40;
-      const warmupTimer = setInterval(() => {
-        addMessage();
-        warmupLeft--;
-        if (warmupLeft <= 0) clearInterval(warmupTimer);
-      }, 180);
+      function startChatForCurrentYear() {
+        const year = window.currentWagicYear || "2026";
 
-      // Then keep adding at intervals for the "spam" feeling
-      setInterval(addMessage, 750);
+        // Clear existing messages and timers
+        while (chatScroll.firstChild) {
+          chatScroll.removeChild(chatScroll.firstChild);
+        }
+        if (warmupTimer) clearInterval(warmupTimer);
+        if (spamTimer) clearInterval(spamTimer);
+        counter = 0;
+
+        // Configure density per year
+        let warmupCount = 40;
+        let warmupDelay = 180;
+        let spamDelay = 750;
+
+        if (year === "2024") {
+          warmupCount = 18;
+          warmupDelay = 260;
+          spamDelay = 1200;
+        } else if (year === "2025") {
+          warmupCount = 45;
+          warmupDelay = 140;
+          spamDelay = 700;
+        } else if (year === "2026") {
+          warmupCount = 65;
+          warmupDelay = 90;
+          spamDelay = 520;
+        }
+
+        let warmupLeft = warmupCount;
+        warmupTimer = setInterval(() => {
+          addMessage();
+          warmupLeft--;
+          if (warmupLeft <= 0 && warmupTimer) {
+            clearInterval(warmupTimer);
+            warmupTimer = null;
+          }
+        }, warmupDelay);
+
+        spamTimer = setInterval(addMessage, spamDelay);
+      }
+
+      // Expose for the video/year script
+      window.resetWagicChat = startChatForCurrentYear;
+
+      // Initial start
+      startChatForCurrentYear();
 
       // Scroll / pause handling
       function updatePausedState() {
